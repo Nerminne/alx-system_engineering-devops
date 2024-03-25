@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # using puppet as in previous task
 
 file { '/etc/ssh/ssh_config':
