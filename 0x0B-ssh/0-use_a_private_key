@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # uses ssh to connect to your server using the private key
-# username ubuntu, ip 54.160.104.110, key location ~/.ssh/school
+# username ubuntu, ip 18.207.235.16, key location ~/.ssh/school
 
-ssh -i ~/.ssh/school ubuntu@54.160.104.110
+ssh -i ~/.ssh/school ubuntu@18.207.235.16
