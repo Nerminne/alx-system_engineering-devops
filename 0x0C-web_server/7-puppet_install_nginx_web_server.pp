@@ -1,20 +1,29 @@
-#install Nginx web server
-package { 'nginx':
-  ensure => installed,
-}
+# install and set up nginx
 
-file_line { 'redirect':
-  ensure => 'present',
-  path   => '/etc/nginx/sites-enabled/default',
-  after  => 'sever_name _;',
-  line   => '\n\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch\?v=QH2-TGUlwu4;\n\t}',
+package { 'nginx':
+  ensure => 'installed',
 }
 
 file { '/var/www/html/index.html':
+  require => Package['nginx'],
   content => 'Hello World!',
+}
+
+file_line { 'add-rewrite':
+  ensure  => 'present',
+  require => Package['nginx'],
+  path    => '/etc/nginx/sites-available/default',
+  after   => 'root /var/www/html;',
+  line    => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH@-TGUlwu4 permanent;',
+  notify  => Service['nginx'],
 }
 
 service { 'nginx':
   ensure  => running,
-  file_line['redirect'],
+  require => File_line['add-rewrite'],
+}
+
+service { 'nginx':
+  ensure  => running,
+  require => File_line['add-rewrite'],
 }
