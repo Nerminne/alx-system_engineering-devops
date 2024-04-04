@@ -1,38 +1,12 @@
 #!/usr/bin/env bash
-#configure a custom 404 page
+# Script to install nginx on server
 
 sudo apt-get update
-sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-sudo chmod -R 755 /var/www
-sudo echo 'Hello World' > /var/www/html/index.html
+sudo apt-get install -y nginx
+echo "Holberton School" >> /var/www/html/index.html
+sed -i '38i\rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
-new_config=\
-"server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-               root /var/www/html;
-        index index.html index.htm index.nginx-debian.html;
-        server_name _;
-        location / {
-                try_files \$uri \$uri/ =404;
-        }
-        error_page 404 /404.html;
-        location  /404.html {
-            internal;
-        }
+echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+sed -i '39i\error_page 404 /error_404.html;' /etc/nginx/sites-available/default
 
-        if (\$request_filename ~ redirect_me){
-            rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
-        }
-}
-"
-echo "Ceci n'est pas une page" > /var/www/html/404.html
-sudo bash -c "echo -e '$new_config' > /etc/nginx/sites-enabled/default"
-
-if [ "$(pgrep -c nginx)" -le 0 ];
-then
-    sudo service nginx start
-else
-    sudo service nginx restart
-fi;
+service nginx start
