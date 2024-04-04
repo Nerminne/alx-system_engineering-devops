@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#install nginx listening on port 80 and show hello world on requesting a page
+
+#sudo apt-get update
+#sudo apt-get install -y nginx
+#echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+
+last_confg="server_name _;\n\n\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch\?v=QH2-TGUlwu4;\n\t}\n\terror_page 404 \/404.html;\n\n\tlocation \/404.html {\n\t\tinternal;\n\t}"
+
+sudo sed -i "s/server_name _;/$last_confg/" /etc/nginx/sites-enabled/default
+sudo service nginx reload
+sudo nginx -t
