@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 #same as perv task but nginx must be not running
-sudo sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
+sudo sed -i "s/listen [0-9]*/listen 80/" /etc/nginx/sites-available/default
 sudo pkill -f "nginx"
