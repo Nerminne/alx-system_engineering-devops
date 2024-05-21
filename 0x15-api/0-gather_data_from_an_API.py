@@ -38,7 +38,7 @@ def todos():
         print("Employee {} is done with tasks({}/{}):".format(name, complete,
                                                               total))
         for todo in emp_todos:
-            print(todo)
+            print("\t{}".format(todo))
 
 
 if __name__ == "__main__":
