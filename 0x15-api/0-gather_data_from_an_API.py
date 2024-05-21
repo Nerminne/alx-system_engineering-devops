@@ -4,8 +4,8 @@ using jsonplaceholder REST API, for a given employee ID,
 returns information about his/her TODO list progress
 """
 
-from sys import argv
 import requests
+from sys import argv
 
 
 def employee_username():
@@ -28,7 +28,7 @@ def todos():
     if response.status_code == 200:
         data = response.json()
         for todos in data:
-            if todos["completed"] == True:
+            if todos["completed"]:
                 complete += 1
                 emp_todos.append(todos["title"])
             else:
