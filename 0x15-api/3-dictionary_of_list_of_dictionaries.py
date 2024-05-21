@@ -9,7 +9,7 @@ import requests
 from sys import argv
 
 
-def employee_username(empID):
+def username(empID):
     """finding username of employee"""
     url = "https://jsonplaceholder.typicode.com/users/" + str(empID)
     response = requests.get(url)
@@ -24,9 +24,9 @@ def all_todo():
     response = requests.get("https://jsonplaceholder.typicode.com/todos")
     final = {}
     for todo in response.json():
-        if todo["userId"] not  in final:
+        if todo["userId"] not in final:
             final[todo["userId"]] = []
-        final[todo["userId"]].append({"username": employee_username(todo["userId"]),
+        final[todo["userId"]].append({"username": usrname(todo["userId"]),
                                       "task": todo["title"],
                                       "completed": todo["completed"]})
     filename = "todo_all_employees.json"
