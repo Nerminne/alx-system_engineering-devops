@@ -4,9 +4,9 @@ using jsonplaceholder REST API, for a given employee ID,
 returns information about his/her TODO list progress
 """
 
+import csv
 import requests
 from sys import argv
-import csv
 
 
 def employee_username():
