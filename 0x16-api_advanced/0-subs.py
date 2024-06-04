@@ -8,11 +8,15 @@ def number_of_subscribers(subreddit):
         Returns number of subscribers
         or 0
     """
-    u_agent = {'User-Agent': '/u/Suspicious-Jelly920'}
-    url = 'https://api.reddit.com/r/{}/about/'.format(subreddit)
-    res = requests.get(url,  headers=u_agent)
-    if res.status_code == 200:
-        subs = res.json()["data"]["subscribers"]
-    else:
-        subs = 0
-    return subs
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    headers = {'User-Agent':
+               'python:subreddit.subscriber.counter:v1.0 (by /u/yourusername)'}
+
+    response = requests.get(url, headers=headers, allow_redirects=False)
+
+    if response.status_code == 200:
+        data = response.json()
+        if 'data' in data and 'subscribers' in data['data']:
+            return data['data']['subscribers']
+
+    return 0
